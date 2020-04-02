@@ -15,7 +15,7 @@ curdoc().theme = "dark_minimal"
 
 
 def get_plot(country_data, field, title, x_label, y_label):
-    TOOLTIPS = [("País:", "$name"), (y_label, "$y{0}")]
+    TOOLTIPS = [("País", "$name"), (y_label, "$y{0}")]
     p = figure(
         title=title,
         y_axis_type="log",
