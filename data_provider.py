@@ -9,15 +9,18 @@ COUNTRY_KEY = "country"
 HUNDREDTH_DATE_KEY = "hundredth_date"
 HUNDREDTH_INDEX_KEY = "hundredth_idx"
 
+DEATHS_DATE_KEY = "deaths_date"
+DEATHS_INDEX_KEY = "deaths_idx"
+
 
 def get_dataset(url):
     return requests.get(TIMESERIES_URL).json()
 
 
-def get_idx_before_hundredth_case(dataset, country):
+def get_idx_before_ith_case(dataset, country, cutoff, parameter_key):
     for i, day in enumerate(dataset[country]):
-        if day[CONFIRMED_KEY] > 100:
-            return i - 1 if i > 0 else 0
+        if day[parameter_key] > cutoff:
+            return i
     return None
 
 
@@ -34,12 +37,20 @@ def get_country_data(countries):
 
     country_data = {}
     for country in countries:
-        hundredth_idx = get_idx_before_hundredth_case(dataset, country)
+        hundredth_case_idx = get_idx_before_ith_case(
+            dataset, country, 100, CONFIRMED_KEY
+        )
+        first_death_idx = get_idx_before_ith_case(dataset, country, 1, DEATHS_KEY)
         this_country = {
-            HUNDREDTH_INDEX_KEY: hundredth_idx,
-            HUNDREDTH_DATE_KEY: get_date_for_idx(dataset, country, hundredth_idx),
+            HUNDREDTH_INDEX_KEY: hundredth_case_idx,
+            HUNDREDTH_DATE_KEY: get_date_for_idx(dataset, country, hundredth_case_idx),
             CONFIRMED_KEY: get_field_for_country(
-                dataset, country, CONFIRMED_KEY, hundredth_idx
+                dataset, country, CONFIRMED_KEY, hundredth_case_idx
+            ),
+            DEATHS_INDEX_KEY: first_death_idx,
+            DEATHS_DATE_KEY: get_date_for_idx(dataset, country, first_death_idx),
+            DEATHS_KEY: get_field_for_country(
+                dataset, country, DEATHS_KEY, first_death_idx
             ),
         }
         country_data[country] = this_country

@@ -1,0 +1,65 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>COVID-19 no Brasil</title>
+    <meta name="description" content="COVID-19 no Brasil">
+    <meta name="author" content="github.com/gusmd">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-1.4.0.min.js"></script>
+</head>
+
+<body>
+    <div id="main">
+        <div id="contents">
+            <h1>COVID-19 NO BRASIL</h1>
+
+            <p>
+                Ainda há desconfiança no Brasil sobre a gravidade do novo Coronavírus.
+                Muitos acham que a situação não ficará crítica como na Itália ou Espanha.
+            </p>
+
+            <p>
+                Fiz esta página para mostrar que quando levamos em consideração o tempo que o Brasil
+                demorou para começar a ter casos, a situação aqui é tão grave quanto lá.
+            </p>
+
+            <p>
+                Os gráficos que seguem movem as curvas para um ponto em comum.
+                Para o número de casos, o "Dia 0" é quando houve o centésimo caso no país.
+                Para o número de mortes, o "Dia 0" é quando houve a primeira morte no país.
+            </p>
+
+            <h2>CASOS CONFIRMADOS</h2>
+
+            {{ bokeh_divs["confirmed"] | indent(12) }}
+
+            <p>
+                A curva do Brasil cresce com a mesma velocidade de países que já estão em situação crítica.
+                Extrapolando, é fácil imaginar que, em tempo, chegaremos nos mesmos valores absolutos.
+            </p>
+
+            <h2>MORTES</h2>
+
+            {{bokeh_divs["deaths"]  | indent(12) }}
+
+            <p>
+                A curva de mortes é ainda mais preocupante, com o Brasil inicialmente disparando à frente de outras nações.
+            </p>
+        </div>
+
+        <footer>
+            <span>
+                Feito por <a href="https://github.com/gusmd">Augusto Medeiros</a>.
+                Hospedado no <a href="https://pages.github.com/">Github Pages</a>
+            </span>
+        </footer>
+    </div>
+
+    {{ bokeh_script }}
+
+</body>
+
+</html>
