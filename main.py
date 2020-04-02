@@ -21,9 +21,10 @@ def get_plot(country_data, field, title, x_label, y_label):
         y_axis_type="log",
         border_fill_alpha=0.0,
         background_fill_alpha=0.0,
-        plot_height=350,
+        plot_height=450,
         sizing_mode="stretch_width",
-        tooltips=TOOLTIPS
+        tooltips=TOOLTIPS,
+        toolbar_location=None,
     )
 
     colors = itertools.cycle(palette)
@@ -50,6 +51,7 @@ def get_plot(country_data, field, title, x_label, y_label):
         )
 
     p.legend.location = "bottom_right"
+    p.legend.orientation = "horizontal"
     p.xaxis.axis_label = x_label
     p.yaxis.axis_label = y_label
     p.yaxis.formatter = PrintfTickFormatter(format="%5f")
