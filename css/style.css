@@ -63,3 +63,9 @@ footer {
     margin-left: 1em;
     margin-right: 1em;
 }
+
+#build_time {
+    font-size: 12px;
+    opacity: 0.5;
+    margin-top: 0;
+}
