@@ -1,4 +1,7 @@
+from datetime import datetime
 import itertools
+
+from pytz import timezone
 
 from bokeh.plotting import figure
 from bokeh.palettes import Dark2_8 as palette
@@ -58,13 +61,20 @@ def get_plot(country_data, field, title, x_label, y_label):
     return p
 
 
-def render_template(confirmed_plot, deaths_plot):
+def get_build_time():
+    now_local = datetime.now()
+    target_timezone = timezone("America/Sao_Paulo")
+    now_converted = now_local.astimezone(target_timezone)
+    return now_converted.strftime("%d/%m/%Y %H:%M h")
+
+
+def render_template(confirmed_plot, deaths_plot, build_time):
     template_file = "templates/index.html"
     with open(template_file) as file:
         template = Template(file.read())
 
     script, div = components({"confirmed": confirmed_plot, "deaths": deaths_plot})
-    page = template.render({"bokeh_divs": div, "bokeh_script": script})
+    page = template.render({"bokeh_divs": div, "bokeh_script": script, "build_time": build_time})
 
     with open("page/index.html", "w") as file:
         file.write(page)
@@ -97,4 +107,6 @@ if __name__ == "__main__":
         country_data, "deaths", "", "Dias desde a primeira morte", "Mortes"
     )
 
-    render_template(confirmed, deaths)
+    build_time = get_build_time()
+
+    render_template(confirmed, deaths, build_time)
