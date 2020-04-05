@@ -76,7 +76,7 @@ def render_template(confirmed_plot, deaths_plot, build_time):
     script, div = components({"confirmed": confirmed_plot, "deaths": deaths_plot})
     page = template.render({"bokeh_divs": div, "bokeh_script": script, "build_time": build_time})
 
-    with open("page/index.html", "w") as file:
+    with open("page/index.html", "w+") as file:
         file.write(page)
 
 
